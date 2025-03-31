@@ -1,0 +1,74 @@
+from math import pi
+
+class Shape:
+    DEFAULT_COLOR = "Black"
+
+    def __init__(self, color=None):
+        self.color = color if color else self.DEFAULT_COLOR
+
+    def describe(self):
+        shape_name = self.__class__.__name__
+        print(f"This shape ({shape_name}) is {self.color}.")
+
+    def area(self):
+        raise NotImplementedError("This method should be implemented by subclasses.")
+
+    def perimeter(self):
+        raise NotImplementedError("This method should be implemented by subclasses.")
+        
+class Triangle(Shape):
+    def __init__(self, side_a, side_b, side_c, color=None):
+        super().__init__(color)
+        self.side_a = side_a
+        self.side_b = side_b
+        self.side_c = side_c
+
+    def area(self):
+        s = (self.side_a + self.side_b + self.side_c) / 2
+        return (s * (s - self.side_a) * (s - self.side_b) * (s - self.side_c)) ** 0.5
+
+    def perimeter(self):
+        return self.side_a + self.side_b + self.side_c
+
+class Rectangle(Shape):
+    def __init__(self, width, height, color=None):
+        super().__init__(color)
+        self.width = width
+        self.height = height
+    
+    def area(self):
+        return self.width * self.height
+
+    def perimeter(self):
+        return 2 * (self.width + self.height)
+
+class Circle(Shape):
+    def __init__(self, radius, color=None):
+        super().__init__(color)
+        self.radius = radius
+
+    def area(self):
+        return pi * self.radius ** 2
+
+    def perimeter(self):
+        return 2 * pi * self.radius
+    
+#-----------------------------------------------#
+t = Triangle(3, 4, 5, color="Blue")
+t.describe()
+print("Triangle area:", t.area())
+print("Triangle area:", t.perimeter())
+
+print()
+
+rectangle = Rectangle(4, 7, color="red")
+rectangle.describe()
+print("Rectangle area:", rectangle.area())
+print("Rectangle area:", rectangle.perimeter())
+
+print()
+
+circle = Circle(5, color="Red")
+circle.describe()
+print("Circle area:", circle.area())
+print("Circle perimeter:", circle.perimeter())
